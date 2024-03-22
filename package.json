@@ -64,6 +64,6 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.3.3"
   },
-  "packageManager": "yarn@^8.6.0"
+  "packageManager": "yarn@1.22.19"
 
 }
