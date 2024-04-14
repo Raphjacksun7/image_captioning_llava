@@ -37,6 +37,28 @@ export function ChatPanel({
 }: ChatPanelProps) {
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
 
+  const handleImageUpload = async (file: File) => {
+    const formData = new FormData()
+    formData.append('imageFile', file)
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        body: formData
+      })
+
+      if (response.ok) {
+        // Handle the successful response
+        console.log('Image uploaded and processed successfully')
+      } else {
+        // Handle the error response
+        console.error('Error processing image')
+      }
+    } catch (error) {
+      console.error('Error processing image:', error)
+    }
+  }
+
   return (
     <div className="fixed inset-x-0 bottom-0 w-full bg-gradient-to-b from-muted/30 from-0% to-muted/30 to-50% animate-in duration-300 ease-in-out dark:from-background/10 dark:from-10% dark:to-background/80 peer-[[data-state=open]]:group-[]:lg:pl-[250px] peer-[[data-state=open]]:group-[]:xl:pl-[300px]">
       <ButtonScrollToBottom />
@@ -86,13 +108,15 @@ export function ChatPanel({
         </div>
         <div className="px-4 py-2 space-y-4 border-t shadow-lg bg-background sm:rounded-t-xl sm:border md:py-4">
           <PromptForm
-            onSubmit={async value => {
-              await append({
-                id,
-                content: value,
-                role: 'user'
-              })
+            onSubmit={async (value: string | File) => {
+              if (typeof value === 'string') {
+                await append({ id, content: value, role: 'user' })
+              } else if (value instanceof File) {
+                // Handle the uploaded file
+                await handleImageUpload(value)
+              }
             }}
+            onImageUpload={handleImageUpload}
             input={input}
             setInput={setInput}
             isLoading={isLoading}
