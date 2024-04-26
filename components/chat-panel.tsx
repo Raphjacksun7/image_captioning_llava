@@ -40,6 +40,7 @@ export function ChatPanel({
   const handleImageUpload = async (file: File) => {
     const formData = new FormData()
     formData.append('imageFile', file)
+    formData.append('currentUrl', window.location.href);
 
     try {
       const response = await fetch('/api/chat', {
