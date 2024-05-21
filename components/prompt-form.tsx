@@ -3,6 +3,7 @@ import { UseChatHelpers } from 'ai/react'
 import { useEnterSubmit } from '@/lib/hooks/use-enter-submit'
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
+import { Loader2 } from 'lucide-react'
 import {
   Tooltip,
   TooltipContent,
@@ -39,7 +40,7 @@ export function PromptForm({
     <form
       onSubmit={async e => {
         e.preventDefault()
-       if (input?.trim()) {
+        if (input?.trim()) {
           setInput('')
           await onSubmit(input)
         }
@@ -81,14 +82,21 @@ export function PromptForm({
           />
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <IconUpload className="mr-2" />
-                Upload Image
-              </Button>
+              {isLoading ? (
+                <Button disabled>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <IconUpload className="mr-2" />
+                  Upload Image
+                </Button>
+              )}
             </TooltipTrigger>
             <TooltipContent>Upload Image</TooltipContent>
           </Tooltip>

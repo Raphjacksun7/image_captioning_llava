@@ -84,11 +84,12 @@ async function processResponse(
 
   const output = new ReadableStream({
     start(controller) {
-      controller.enqueue(formattedResponse)
+      controller.enqueue(
+        JSON.stringify({ response: formattedResponse, chatId: id })
+      )
       controller.close()
     }
   })
-
   return new StreamingTextResponse(output)
 }
 

@@ -8,6 +8,7 @@ import { ButtonScrollToBottom } from '@/components/button-scroll-to-bottom'
 import { IconRefresh, IconShare, IconStop } from '@/components/ui/icons'
 import { FooterText } from '@/components/footer'
 import { ChatShareDialog } from '@/components/chat-share-dialog'
+import { useRouter } from 'next/navigation'
 
 export interface ChatPanelProps
   extends Pick<
@@ -27,7 +28,7 @@ export interface ChatPanelProps
 export function ChatPanel({
   id,
   title,
-  isLoading,
+  // isLoading,
   stop,
   append,
   reload,
@@ -36,11 +37,14 @@ export function ChatPanel({
   messages
 }: ChatPanelProps) {
   const [shareDialogOpen, setShareDialogOpen] = React.useState(false)
+  const router = useRouter()
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const handleImageUpload = async (file: File) => {
+    setIsLoading(true)
     const formData = new FormData()
     formData.append('imageFile', file)
-    formData.append('currentUrl', window.location.href);
+    formData.append('currentUrl', window.location.href)
 
     try {
       const response = await fetch('/api/chat', {
@@ -49,14 +53,20 @@ export function ChatPanel({
       })
 
       if (response.ok) {
-        // Handle the successful response
+        const data = await response.json()
+        const { response: formattedResponse, chatId } = data
         console.log('Image uploaded and processed successfully')
+        // Redirect to the chat route with the chatId
+        router.push(`/chat/${chatId}`)
+        // window.history.pushState({}, '', `/chat/${chatId}`)
       } else {
         // Handle the error response
         console.error('Error processing image')
       }
     } catch (error) {
       console.error('Error processing image:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
