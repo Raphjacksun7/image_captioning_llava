@@ -4,8 +4,10 @@ import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 import { imageAnalysisPrompt } from '../../constants/prompt'
 
-import 'crypto-browserify/polyfill';
-import 'stream-browserify/globals';
+// Apply the crypto polyfill
+require('crypto-browserify/polyfill');
+// Apply the stream polyfill
+require('stream-browserify/globals');
 
 // Set the global objects to use the polyfill
 global.crypto = require('crypto-browserify');
