@@ -4,11 +4,14 @@ import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 import { imageAnalysisPrompt } from '../../constants/prompt'
 
+import dynamic from 'next/dynamic';
+
 // Import the crypto-browserify module
 const crypto = require('crypto-browserify');
 
-// Set the global.crypto object to use the polyfill
-global.crypto = crypto;
+// Set the global objects to use the polyfill
+global.crypto = require('crypto-browserify');
+global.process = require('process');
 
 import Replicate from 'replicate'
 
