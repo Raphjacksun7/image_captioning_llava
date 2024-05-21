@@ -25,6 +25,7 @@
     "@vercel/kv": "^1.0.1",
     "@vercel/og": "^0.6.2",
     "ai": "^2.2.31",
+    "buffer": "^6.0.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "crypto-browserify": "^3.12.0",
@@ -46,7 +47,8 @@
     "react-textarea-autosize": "^8.5.3",
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
-    "replicate": "^0.29.1"
+    "replicate": "^0.29.1",
+    "stream-browserify": "^3.0.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
