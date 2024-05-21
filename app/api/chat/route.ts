@@ -4,17 +4,14 @@ import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
 import { imageAnalysisPrompt } from '../../constants/prompt'
 
-import dynamic from 'next/dynamic';
-
-// Import the crypto-browserify module
-const crypto = require('crypto-browserify');
+import 'crypto-browserify/polyfill';
+import 'stream-browserify/globals';
 
 // Set the global objects to use the polyfill
 global.crypto = require('crypto-browserify');
 global.process = require('process');
 
 import Replicate from 'replicate'
-
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN
