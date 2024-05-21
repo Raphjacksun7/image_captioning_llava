@@ -27,9 +27,9 @@ const nextConfig = {
       // Setting up fallbacks for Node.js modules
       config.resolve.fallback = {
         ...config.resolve.fallback, // Copy existing fallbacks
-        crypto: require.resolve('crypto-browserify'), // Alias 'crypto' to 'crypto-browserify'
         stream: require.resolve('stream-browserify'), // Add polyfill for 'stream'
         buffer: require.resolve('buffer/'), // Add polyfill for 'buffer'
+        'node:crypto': 'commonjs crypto',
 
       };
     }
