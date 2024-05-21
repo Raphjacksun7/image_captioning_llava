@@ -2,8 +2,16 @@ import { kv } from '@vercel/kv'
 import { StreamingTextResponse } from 'ai'
 import { auth } from '@/auth'
 import { nanoid } from '@/lib/utils'
-import Replicate from 'replicate'
 import { imageAnalysisPrompt } from '../../constants/prompt'
+
+// Import the crypto-browserify module
+const crypto = require('crypto-browserify');
+
+// Set the global.crypto object to use the polyfill
+global.crypto = crypto;
+
+import Replicate from 'replicate'
+
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN
