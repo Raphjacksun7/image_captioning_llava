@@ -11,6 +11,8 @@
 //     ]
 //   }
 // }
+
+
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -22,19 +24,14 @@ const nextConfig = {
       }
     ]
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, buildId, dev, isClient, defaultLoaders, webpack }) => {
+    // Only perform this configuration on the client-side build
     if (!isServer) {
-      // Setting up fallbacks for Node.js modules
-      config.resolve.fallback = {
-        ...config.resolve.fallback, // Copy existing fallbacks
-        stream: require.resolve('stream-browserify'), // Add polyfill for 'stream'
-        buffer: require.resolve('buffer/'), // Add polyfill for 'buffer'
-        'node:crypto': 'commonjs crypto',
-
-      };
+      config.resolve.fallback = config.resolve.fallback || {};
+      config.resolve.fallback.crypto = require.resolve('crypto-browserify');
     }
     return config;
-  }
+  },
 };
 
 module.exports = nextConfig;
